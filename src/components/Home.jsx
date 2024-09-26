@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import Element from './Element';
 import { IoPartlySunnyOutline, IoSunnyOutline, IoCloudyOutline } from 'react-icons/io5';
@@ -12,7 +12,13 @@ import Heading from './Heading';
 
 export default function Home() {
 
-  const weather = {
+  const [ weather, setWeather ] = useState({
+    temp: '30°',
+    tempRealFeel: '35°'
+  })
+
+
+  const weatherType = {
     isCloudy: false,
     isSunny: false,
   }
@@ -21,9 +27,9 @@ export default function Home() {
   const currentTime = moment().format('h:mm a');
 
   const renderWeatherIcon = () => {
-    if (weather.isCloudy) {
+    if (weatherType.isCloudy) {
       return <IoCloudyOutline className='text-9xl text-gray-400' />;
-    } else if (weather.isSunny) {
+    } else if (weatherType.isSunny) {
       return <IoSunnyOutline className='text-9xl text-yellow-500' />;
     } else {
       return <IoPartlySunnyOutline className='text-9xl text-orange-400' />;
@@ -31,10 +37,10 @@ export default function Home() {
   };
 
   const renderWeatherDescription = () => {
-    if (weather.isCloudy) {
+    if (weatherType.isCloudy) {
       return <div><h1 className='text-md font-bold'>Cloudy</h1>
         <p className='text-sm'>MORE DETAILS</p></div>;
-    } else if (weather.isSunny) {
+    } else if (weatherType.isSunny) {
       return <div><h1 className='text-md font-bold'>Sunny</h1>
         <p className='text-sm'>MORE DETAILS</p></div>;
     } else {
@@ -82,15 +88,15 @@ export default function Home() {
                 <p className='text-sm'>MORE DETAILS</p>
               </div> */}
                   <div>
-                    <div className='flex'><p className='text-8xl pt-6 font-bold'>30°</p>
+                    <div className='flex'><p className='text-8xl pt-6 font-bold'>{weather.temp}</p>
                       <span className='pt-20 text-2xl'>c</span>
                     </div>
-                    <p>RealFeel 37°C</p>
+                    <p>RealFeel {weather.tempRealFeel}</p>
                   </div>
                 </div>
                 <div className='w-[50%]'>
                   <div>
-                    <Element elementName='RealFeel Shade' elementValue='30°C' />
+                    <Element elementName='RealFeel Shade' elementValue={weather.tempRealFeel} />
                     <Element elementName='Wind' elementValue='ESE 12 km/h' />
                     <Element elementName='Wind Gusts' elementValue='26 km/h' />
                     <Element elementName='Air Quality' elementValue='Good' />
